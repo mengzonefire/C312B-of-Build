@@ -55,11 +55,10 @@ jobs:
         sudo chown $USER:$GROUPS /workdir
 
     - name: Clone source code
-      if: ! -d "/workdir/openwrt"
       working-directory: /workdir
       run: |
         df -hT $PWD
-        git clone $REPO_URL -b $REPO_BRANCH openwrt
+        if [ ! -d "/workdir/openwrt" ]; then git clone $REPO_URL -b $REPO_BRANCH openwrt; fi
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
     - name: Load custom feeds
