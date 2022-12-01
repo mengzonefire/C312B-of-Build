@@ -55,6 +55,7 @@ jobs:
         sudo chown $USER:$GROUPS /workdir
 
     - name: Clone source code
+      if: ! -d "/workdir/openwrt"
       working-directory: /workdir
       run: |
         df -hT $PWD
