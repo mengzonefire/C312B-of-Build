@@ -35,7 +35,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: self-hosted
 
     steps:
     - name: Checkout
@@ -59,7 +59,7 @@ jobs:
       working-directory: /workdir
       run: |
         df -hT $PWD
-        git clone $REPO_URL -b $REPO_BRANCH openwrt
+        if [ ! -d "/workdir/openwrt" ]; then git clone $REPO_URL -b $REPO_BRANCH openwrt; fi
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
     - name: cache
       uses: klever1988/cachewrtbuild@main
@@ -107,6 +107,7 @@ jobs:
       run: |
         cd openwrt
         echo -e "$(nproc) thread compile"
+        PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
         make -j$(nproc) || make -j1 || make -j1 V=s
         echo "status=success" >> $GITHUB_OUTPUT
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
