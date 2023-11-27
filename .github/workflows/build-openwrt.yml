@@ -20,7 +20,7 @@ on:
         default: 'false'
 
 env:
-  REPO_URL: https://github.com/zfdx123/22.03-of
+  REPO_URL: https://github.com/mengzonefire/22.03-of
   REPO_BRANCH: openwrt-22.03
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: .config
