@@ -36,6 +36,7 @@ env:
 jobs:
   build:
     runs-on: self-hosted
+    # 本地编译机必须为ubuntu 20.04
 
     steps:
     - name: Checkout
